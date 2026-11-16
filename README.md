@@ -18,7 +18,7 @@ The site is meant to read like a lab notebook: quiet, dark, and focused on numbe
 
 **Type:** Bricolage Grotesque for headlines, Inter for body text, JetBrains Mono for labels and the terminal.
 
-**Theme:** follows the visitor's system setting through CSS custom properties. No toggle and no flash.
+**Theme:** follows the visitor's system setting by default, with a dark/light toggle in the nav that remembers the choice. No flash on load.
 
 ## Built with
 
