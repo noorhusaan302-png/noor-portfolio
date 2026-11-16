@@ -120,6 +120,8 @@ html,body{cursor:var(--cur)}
 a,button,[role="button"],summary,label{cursor:var(--cur-link)}
 }
 @media (hover:hover) and (pointer:fine) and (prefers-color-scheme:light){:root:not([data-theme="dark"]){--cur:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2232%22%20height%3D%2232%22%20viewBox%3D%220%200%2032%2032%22%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%2216%22%20r%3D%229%22%20fill%3D%22none%22%20stroke%3D%22%233350d6%22%20stroke-opacity%3D%22.75%22%20stroke-width%3D%221.5%22/%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%2216%22%20r%3D%223%22%20fill%3D%22%233350d6%22/%3E%3C/svg%3E") 16 16,auto;--cur-link:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2232%22%20height%3D%2232%22%20viewBox%3D%220%200%2032%2032%22%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%2216%22%20r%3D%2213%22%20fill%3D%22%233350d6%22%20fill-opacity%3D%22.18%22%20stroke%3D%22%233350d6%22%20stroke-width%3D%221.5%22/%3E%3Ccircle%20cx%3D%2216%22%20cy%3D%2216%22%20r%3D%223.5%22%20fill%3D%22%233350d6%22/%3E%3C/svg%3E") 16 16,pointer}}
+::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
+html.theming,html.theming *{transition:background-color .35s ease,color .35s ease,border-color .35s ease,fill .35s ease!important}
 </style>
 </head>
 <body>
@@ -249,7 +251,20 @@ var b=document.querySelector('.theme');if(!b)return;
 var root=document.documentElement,mq=window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)');
 function current(){var t=root.getAttribute('data-theme');if(t)return t;return mq&&mq.matches?'light':'dark';}
 function sync(){b.setAttribute('aria-pressed',current()==='light'?'true':'false');}
-b.addEventListener('click',function(){var n=current()==='light'?'dark':'light';root.setAttribute('data-theme',n);try{localStorage.setItem('theme',n);}catch(e){}sync();window.dispatchEvent(new Event('themechange'));});
+function apply(n){root.setAttribute('data-theme',n);try{localStorage.setItem('theme',n);}catch(e){}sync();window.dispatchEvent(new Event('themechange'));}
+var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+b.addEventListener('click',function(){
+ var n=current()==='light'?'dark':'light';
+ if(reduce){apply(n);return;}
+ if(document.startViewTransition){
+  var r=b.getBoundingClientRect(),x=r.left+r.width/2,y=r.top+r.height/2,
+      end=Math.hypot(Math.max(x,innerWidth-x),Math.max(y,innerHeight-y));
+  var t=document.startViewTransition(function(){apply(n);});
+  t.ready.then(function(){root.animate({clipPath:['circle(0px at '+x+'px '+y+'px)','circle('+end+'px at '+x+'px '+y+'px)']},{duration:550,easing:'cubic-bezier(.4,0,.2,1)',pseudoElement:'::view-transition-new(root)'});});
+  return;
+ }
+ root.classList.add('theming');apply(n);setTimeout(function(){root.classList.remove('theming');},400);
+});
 sync();
 })();
 </script>
