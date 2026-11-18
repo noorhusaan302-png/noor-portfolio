@@ -196,6 +196,20 @@ html.theming,html.theming *{transition:background-color .35s ease,color .35s eas
 
 <article class="case">
 <span class="n">01</span>
+<div><div class="kind">Security · AI</div><h3>AST Security Reviewer</h3><p class="one">A GitHub pull-request bot that finds security bugs and suggests fixes, using a model that runs on your own machine.</p><div class="stack">Java 21 / Spring Boot / JavaParser / Ollama / JUnit / Docker</div></div>
+<div class="body">
+<dl>
+<dt>Problem</dt><dd>SQL injection and hardcoded secrets slip through code review, and many teams can't send their code to a cloud AI.</dd>
+<dt>How</dt><dd>A Spring Boot webhook verifies each GitHub event with <b>constant-time HMAC-SHA256</b>. <b>JavaParser AST visitors</b> flag the bug, a local <b>Qwen 2.5 Coder</b> model writes a fix, and the fix is <b>re-parsed</b> so only valid Java gets posted back as an inline PR suggestion.</dd>
+<dt>Result</dt><dd>Only the flagged snippet goes to the model, and it <b>never leaves the machine</b>. <b>37 JUnit tests</b> cover every rule, false positives, fix validation and webhook signatures.</dd>
+</dl>
+<div class="metrics"><span>37 tests</span><span>0 code sent to the cloud</span><span>Dockerized</span></div>
+<div class="links"><a class="ghost" href="https://github.com/noorhusaan302-png/ast-security-reviewer" target="_blank" rel="noopener">Source ↗</a></div>
+</div>
+</article>
+
+<article class="case">
+<span class="n">02</span>
 <div><div class="kind">Systems · Networking</div><h3>HTTP Caching Proxy</h3><p class="one">A multithreaded, event-driven forward proxy written from scratch in C.</p><div class="stack">C / pthreads / kqueue / sockets / Python tests</div></div>
 <div class="body">
 <dl>
@@ -209,7 +223,7 @@ html.theming,html.theming *{transition:background-color .35s ease,color .35s eas
 </article>
 
 <article class="case">
-<span class="n">02</span>
+<span class="n">03</span>
 <div><div class="kind">AI infrastructure</div><h3>LLM Caching Proxy</h3><p class="one">C middleware that sits between apps and a local LLM so repeat prompts skip the model.</p><div class="stack">C / pthreads / POSIX sockets / Ollama / Python tests</div></div>
 <div class="body">
 <dl>
@@ -219,20 +233,6 @@ html.theming,html.theming *{transition:background-color .35s ease,color .35s eas
 </dl>
 <div class="metrics"><span>&lt;1 ms hit</span><span>20 s → 1 s</span><span>1,000 req, 0 errors</span></div>
 <div class="links"><a class="ghost" href="https://github.com/noorhusaan302-png/llm-caching-proxy" target="_blank" rel="noopener">Source ↗</a></div>
-</div>
-</article>
-
-<article class="case">
-<span class="n">03</span>
-<div><div class="kind">Security · AI</div><h3>AST Security Reviewer</h3><p class="one">A GitHub pull-request bot that finds security bugs and suggests fixes, using a model that runs on your own machine.</p><div class="stack">Java 21 / Spring Boot / JavaParser / Ollama / JUnit / Docker</div></div>
-<div class="body">
-<dl>
-<dt>Problem</dt><dd>SQL injection and hardcoded secrets slip through code review, and many teams can't send their code to a cloud AI.</dd>
-<dt>How</dt><dd>A Spring Boot webhook verifies each GitHub event with <b>constant-time HMAC-SHA256</b>. <b>JavaParser AST visitors</b> flag the bug, a local <b>Qwen 2.5 Coder</b> model writes a fix, and the fix is <b>re-parsed</b> so only valid Java gets posted back as an inline PR suggestion.</dd>
-<dt>Result</dt><dd>Only the flagged snippet goes to the model, and it <b>never leaves the machine</b>. <b>37 JUnit tests</b> cover every rule, false positives, fix validation and webhook signatures.</dd>
-</dl>
-<div class="metrics"><span>37 tests</span><span>0 code sent to the cloud</span><span>Dockerized</span></div>
-<div class="links"><a class="ghost" href="https://github.com/noorhusaan302-png/ast-security-reviewer" target="_blank" rel="noopener">Source ↗</a></div>
 </div>
 </article>
 
