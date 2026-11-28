@@ -150,8 +150,11 @@ a,button{cursor:var(--cur-link)}
 .wip .board small{font-size:.66rem;letter-spacing:.14em;color:var(--muted)}
 :root[data-theme="light"] .wip{--tape:#e0a800}
 @media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .wip{--tape:#e0a800}}
-:root[data-theme="light"] .wip .board b{color:#7a5a00}
-@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .wip .board b{color:#7a5a00}}
+:root[data-theme="light"] .wip .board{background:#11131a;box-shadow:0 0 0 6px #11131a,0 18px 40px rgba(0,0,0,.25)}
+:root[data-theme="light"] .wip .board b{color:#f2c230}
+:root[data-theme="light"] .wip .board b i{background:#f2c230}
+:root[data-theme="light"] .wip .board small{color:#aab0c0}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .wip .board{background:#11131a;box-shadow:0 0 0 6px #11131a,0 18px 40px rgba(0,0,0,.25)}:root:not([data-theme="dark"]) .wip .board b{color:#f2c230}:root:not([data-theme="dark"]) .wip .board b i{background:#f2c230}:root:not([data-theme="dark"]) .wip .board small{color:#aab0c0}}
 .wip.taped>.n,.wip.taped>div{opacity:.38}
 .wip.taped .tape{clip-path:inset(0 0 0 0)}
 .wip.taped .board{opacity:1;transform:translate(-50%,-50%) scale(1)}
