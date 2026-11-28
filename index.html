@@ -135,6 +135,41 @@ html,body{cursor:var(--cur)}
 a,button{cursor:var(--cur-link)}
 }
 @media (hover:hover) and (pointer:fine) and (prefers-color-scheme:light){:root:not([data-theme="dark"]){--cur:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%220%200%2040%2040%22%3E%3Cdefs%3E%3CradialGradient%20id%3D%22g%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%233350d6%22%20stop-opacity%3D%220.55%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%233350d6%22%20stop-opacity%3D%220%22/%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle%20cx%3D%2220.0%22%20cy%3D%2220.0%22%20r%3D%2219%22%20fill%3D%22url%28%23g%29%22/%3E%3Ccircle%20cx%3D%2220.0%22%20cy%3D%2220.0%22%20r%3D%226.5%22%20fill%3D%22%233350d6%22/%3E%3C/svg%3E") 20 20,auto;--cur-link:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3CradialGradient%20id%3D%22g%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%233350d6%22%20stop-opacity%3D%220.5%22/%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%233350d6%22%20stop-opacity%3D%220%22/%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle%20cx%3D%2232.0%22%20cy%3D%2232.0%22%20r%3D%2231%22%20fill%3D%22url%28%23g%29%22/%3E%3Ccircle%20cx%3D%2232.0%22%20cy%3D%2232.0%22%20r%3D%2215.5%22%20fill%3D%22%233350d6%22/%3E%3C/svg%3E") 32 32,pointer}}
+
+/* Under construction card. On hover (on touch screens, for a moment when it scrolls into view) the content dims, two flat ribbons with running text cross the card one after the other, and a status plate settles in the middle. */
+.wip{position:relative;overflow:hidden;--tape:#f2c230;--tape-ink:#14120a}
+.wip>.n,.wip>div{transition:opacity .3s ease}
+.wip .tape{position:absolute;left:-15%;width:130%;top:50%;height:30px;margin-top:-15px;background:var(--tape);color:var(--tape-ink);font-family:var(--mono);font-size:.7rem;font-weight:500;letter-spacing:.18em;line-height:30px;white-space:nowrap;overflow:hidden;pointer-events:none;z-index:2;transform:rotate(11deg);clip-path:inset(0 100% 0 0)}
+.wip .tape.b{transform:rotate(-11deg);clip-path:inset(0 0 0 100%)}
+.wip .tape span{display:inline-block}
+.wip .tape em{font-style:normal;opacity:.55;margin:0 .6em}
+.wip .board{position:absolute;left:50%;top:50%;z-index:3;pointer-events:none;display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 22px 13px;border-radius:10px;background:var(--bg);border:1px solid var(--tape);box-shadow:0 0 0 6px var(--bg),0 18px 40px rgba(0,0,0,.35);font-family:var(--mono);text-transform:uppercase;white-space:nowrap;opacity:0;transform:translate(-50%,calc(-50% + 14px)) scale(.96)}
+.wip .board b{display:flex;align-items:center;gap:10px;font-weight:500;font-size:.86rem;letter-spacing:.16em;color:var(--tape)}
+.wip .board b i{width:8px;height:8px;border-radius:50%;background:var(--tape)}
+.wip .board small{font-size:.66rem;letter-spacing:.14em;color:var(--muted)}
+:root[data-theme="light"] .wip{--tape:#e0a800}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .wip{--tape:#e0a800}}
+:root[data-theme="light"] .wip .board b{color:#7a5a00}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .wip .board b{color:#7a5a00}}
+.wip.taped>.n,.wip.taped>div{opacity:.38}
+.wip.taped .tape{clip-path:inset(0 0 0 0)}
+.wip.taped .board{opacity:1;transform:translate(-50%,-50%) scale(1)}
+@media (hover:hover) and (pointer:fine){
+.wip:hover>.n,.wip:hover>div{opacity:.38}
+.wip:hover .tape{clip-path:inset(0 0 0 0)}
+.wip:hover .board{opacity:1;transform:translate(-50%,-50%) scale(1)}
+}
+@media (prefers-reduced-motion:no-preference){
+.wip .tape{transition:clip-path .22s ease-in}
+.wip .board{transition:opacity .18s ease-in,transform .18s ease-in}
+.wip.taped .tape,.wip:hover .tape{transition:clip-path .6s cubic-bezier(.16,1,.3,1)}
+.wip.taped .tape.b,.wip:hover .tape.b{transition-delay:.22s}
+.wip.taped .board,.wip:hover .board{transition:opacity .35s ease .55s,transform .5s cubic-bezier(.16,1,.3,1) .55s}
+.wip .tape span{animation:run 26s linear infinite}
+.wip .tape.b span{animation-direction:reverse}
+.wip .board b i{animation:pulse 1.6s ease-in-out infinite}
+@keyframes run{to{transform:translateX(-50%)}}
+}
 ::view-transition-old(root),::view-transition-new(root){animation-duration:.4s;animation-timing-function:ease}
 html.theming,html.theming *{transition:background-color .35s ease,color .35s ease,border-color .35s ease,fill .35s ease!important}
 </style>
@@ -153,7 +188,7 @@ html.theming,html.theming *{transition:background-color .35s ease,color .35s eas
 <p class="lede">I'm Muhammad Noor Ul Hassan Butt. I write <b>C, Java and Python</b> close to the metal, and I research <b>how hardware faults corrupt AI systems</b>. If it has to hold under load, I want to be the one who tested it.</p>
 <div class="actions">
 <a class="btn" href="#work">See the work</a>
-<a class="ghost" href="resume.pdf?v=20261124" target="_blank" rel="noopener">Résumé</a>
+<a class="ghost" href="resume.pdf?v=20261127" target="_blank" rel="noopener">Résumé</a>
 <a class="ghost" href="https://github.com/noorhusaan302-png" target="_blank" rel="noopener">GitHub</a>
 <a class="ghost" href="https://www.linkedin.com/in/muhammad-noor-ul-hassan-butt-84a553383/" target="_blank" rel="noopener">LinkedIn</a>
 <a class="ghost" href="mailto:noorhusaan302@gmail.com">Email</a>
@@ -164,7 +199,7 @@ html.theming,html.theming *{transition:background-color .35s ease,color .35s eas
 <div class="lbl"><i></i>Open to Summer 2027 internships</div>
 <dl>
 <dt>now</dt><dd>Fault-injection research on self-driving and LLM systems</dd>
-<dt>building</dt><dd>Systems and backend software in C, Java and Python</dd>
+<dt>building</dt><dd>A resume matcher on my own C++/CUDA inference engine</dd>
 <dt>based</dt><dd>Fairfax, Virginia</dd>
 </dl>
 </div>
@@ -236,8 +271,24 @@ html.theming,html.theming *{transition:background-color .35s ease,color .35s eas
 </div>
 </article>
 
-<article class="case">
+<article class="case wip" id="matcher">
 <span class="n">04</span>
+<div><div class="kind">AI infrastructure · In progress</div><h3>Resume Matcher Engine</h3><p class="one">A resume-to-job matcher that runs its own models on an inference engine I'm writing from scratch in C++ and CUDA.</p><div class="stack">C++17 / CUDA / all-MiniLM-L6-v2 / GPT-2 / Qdrant (optional)</div></div>
+<div class="body">
+<dl>
+<dt>Problem</dt><dd>Job matching usually means sending your resume to someone else's AI API, and keyword filters miss a match when the wording differs.</dd>
+<dt>How</dt><dd>The engine loads the original <b>all-MiniLM-L6-v2</b> and <b>GPT-2</b> weights and runs them on the CPU or an NVIDIA GPU with <b>hand-written kernels</b>, with <b>no PyTorch or BLAS at run time</b>. Each job requirement is matched to the closest resume line by meaning, then scored by a small model <b>trained in the repo</b>.</dd>
+<dt>Status</dt><dd>Runs on my laptop today: drop in a resume and job posts, and it ranks the jobs and shows <b>line by line</b> what the resume covers and what it's missing. The public repo and a live demo are coming once it's ready.</dd>
+</dl>
+<div class="metrics"><span>C++ and CUDA</span><span>no ML library at run time</span><span>runs locally</span></div>
+</div>
+<span class="tape a" aria-hidden="true"><span>UNDER CONSTRUCTION <em>///</em> SHIPPING SOON <em>///</em> UNDER CONSTRUCTION <em>///</em> SHIPPING SOON <em>///</em> UNDER CONSTRUCTION <em>///</em> SHIPPING SOON <em>///</em> UNDER CONSTRUCTION <em>///</em> SHIPPING SOON <em>///</em> UNDER CONSTRUCTION <em>///</em> SHIPPING SOON <em>///</em> UNDER CONSTRUCTION <em>///</em> SHIPPING SOON <em>///</em> UNDER CONSTRUCTION <em>///</em> SHIPPING SOON <em>///</em> UNDER CONSTRUCTION <em>///</em> SHIPPING SOON <em>///</em> UNDER CONSTRUCTION <em>///</em> SHIPPING SOON <em>///</em> UNDER CONSTRUCTION <em>///</em> SHIPPING SOON <em>///</em> UNDER CONSTRUCTION <em>///</em> SHIPPING SOON <em>///</em> UNDER CONSTRUCTION <em>///</em> SHIPPING SOON <em>///</em> UNDER CONSTRUCTION <em>///</em> SHIPPING SOON <em>///</em> UNDER CONSTRUCTION <em>///</em> SHIPPING SOON <em>///</em> UNDER CONSTRUCTION <em>///</em> SHIPPING SOON <em>///</em> UNDER CONSTRUCTION <em>///</em> SHIPPING SOON <em>///</em> UNDER CONSTRUCTION <em>///</em> SHIPPING SOON <em>///</em> UNDER CONSTRUCTION <em>///</em> SHIPPING SOON <em>///</em> UNDER CONSTRUCTION <em>///</em> SHIPPING SOON <em>///</em> UNDER CONSTRUCTION <em>///</em> SHIPPING SOON <em>///</em> </span></span>
+<span class="tape b" aria-hidden="true"><span>UNDER CONSTRUCTION <em>///</em> SHIPPING SOON <em>///</em> UNDER CONSTRUCTION <em>///</em> SHIPPING SOON <em>///</em> UNDER CONSTRUCTION <em>///</em> SHIPPING SOON <em>///</em> UNDER CONSTRUCTION <em>///</em> SHIPPING SOON <em>///</em> UNDER CONSTRUCTION <em>///</em> SHIPPING SOON <em>///</em> UNDER CONSTRUCTION <em>///</em> SHIPPING SOON <em>///</em> UNDER CONSTRUCTION <em>///</em> SHIPPING SOON <em>///</em> UNDER CONSTRUCTION <em>///</em> SHIPPING SOON <em>///</em> UNDER CONSTRUCTION <em>///</em> SHIPPING SOON <em>///</em> UNDER CONSTRUCTION <em>///</em> SHIPPING SOON <em>///</em> UNDER CONSTRUCTION <em>///</em> SHIPPING SOON <em>///</em> UNDER CONSTRUCTION <em>///</em> SHIPPING SOON <em>///</em> UNDER CONSTRUCTION <em>///</em> SHIPPING SOON <em>///</em> UNDER CONSTRUCTION <em>///</em> SHIPPING SOON <em>///</em> UNDER CONSTRUCTION <em>///</em> SHIPPING SOON <em>///</em> UNDER CONSTRUCTION <em>///</em> SHIPPING SOON <em>///</em> UNDER CONSTRUCTION <em>///</em> SHIPPING SOON <em>///</em> UNDER CONSTRUCTION <em>///</em> SHIPPING SOON <em>///</em> UNDER CONSTRUCTION <em>///</em> SHIPPING SOON <em>///</em> UNDER CONSTRUCTION <em>///</em> SHIPPING SOON <em>///</em> </span></span>
+<span class="board" aria-hidden="true"><b><i></i>Under construction</b><small>launching soon</small></span>
+</article>
+
+<article class="case">
+<span class="n">05</span>
 <div><div class="kind">Shipped · Business</div><h3>Helios Boxing</h3><p class="one">The storefront for my own boxing gear brand. Live, and run by me.</p><div class="stack">WordPress / e-commerce / product and brand design</div></div>
 <div class="body">
 <dl>
@@ -251,7 +302,7 @@ html.theming,html.theming *{transition:background-color .35s ease,color .35s eas
 </article>
 
 <article class="case">
-<span class="n">05</span>
+<span class="n">06</span>
 <div><div class="kind">Operating systems</div><h3>Noorshell</h3><p class="one">A Unix shell written from scratch in C for macOS and Linux.</p><div class="stack">C / POSIX / fork / exec / pipes</div></div>
 <div class="body">
 <dl>
@@ -284,11 +335,13 @@ html.theming,html.theming *{transition:background-color .35s ease,color .35s eas
 <div>
 <p>Since October 2026 I've been an undergraduate research assistant at George Mason University, studying <b>hardware soft errors and silent data corruption</b> in self-driving and LLM systems.</p>
 <p>I support a PhD researcher on an autonomous-driving reliability project and run Slurm jobs on GMU's Hopper HPC/GPU cluster to benchmark fault injection on autonomous-driving and vision-language-action models.</p>
+<p>Most recently I benchmarked the <b>pi0.5</b> vision-language-action model in the <b>LIBERO</b> robot simulator: <b>95% task success</b> over 200 episodes across 40 manipulation tasks, as the fault-free baseline to compare against.</p>
 </div>
 <div class="kv">
 <div><span>since</span><span>Oct 2026</span></div>
 <div><span>topic</span><span>fault injection, SDC</span></div>
 <div><span>models</span><span>driving, VLA, LLM</span></div>
+<div><span>baseline</span><span>pi0.5 on LIBERO, 95%</span></div>
 <div><span>compute</span><span>Hopper HPC/GPU, Slurm</span></div>
 </div>
 </div>
@@ -298,7 +351,7 @@ html.theming,html.theming *{transition:background-color .35s ease,color .35s eas
 <div class="eyebrow">Experience</div>
 <h2>Where I've worked.</h2>
 <div class="xp">
-<div class="row"><span class="mono">Oct 2026 to now</span><div><h3>Undergraduate Research Assistant, George Mason University</h3><p>Fault-injection benchmarking on the Hopper cluster, plus weekly literature reviews with the research group.</p></div></div>
+<div class="row"><span class="mono">Oct 2026 to now</span><div><h3>Undergraduate Research Assistant, George Mason University</h3><p>Fault-injection benchmarking on the Hopper cluster, including a pi0.5 baseline on the LIBERO simulator (95% task success), plus weekly literature reviews with the research group.</p></div></div>
 <div class="row"><span class="mono">Aug 2026 to now</span><div><h3>Food Service Worker, Mason Dining</h3><p>Fast-paced kitchen work to food safety and quality standards.</p></div></div>
 <div class="row"><span class="mono">Sep to Dec 2024</span><div><h3>Data Entry Assistant, WWF</h3><p>Entered and organized digital data and documentation in Sialkot, Pakistan.</p></div></div>
 </div>
@@ -311,7 +364,7 @@ html.theming,html.theming *{transition:background-color .35s ease,color .35s eas
 <a class="btn" href="mailto:noorhusaan302@gmail.com">Email me</a>
 <a class="ghost" href="https://www.linkedin.com/in/muhammad-noor-ul-hassan-butt-84a553383/" target="_blank" rel="noopener">LinkedIn</a>
 <a class="ghost" href="https://github.com/noorhusaan302-png" target="_blank" rel="noopener">GitHub</a>
-<a class="ghost" href="resume.pdf?v=20261124" target="_blank" rel="noopener">Résumé</a>
+<a class="ghost" href="resume.pdf?v=20261127" target="_blank" rel="noopener">Résumé</a>
 </div>
 <footer class="mono"><span>Muhammad Noor Ul Hassan Butt · noorhusaan302@gmail.com</span><span>Fairfax, Virginia</span></footer>
 </section>
@@ -355,6 +408,13 @@ b.addEventListener('click',function(){
  root.classList.add('theming');apply(n);setTimeout(function(){root.classList.remove('theming');},400);
 });
 sync();
+})();
+
+(function(){
+var c=document.querySelector('.wip');if(!c)return;
+var fine=window.matchMedia&&window.matchMedia('(hover:hover) and (pointer:fine)').matches;
+if(fine||!('IntersectionObserver' in window))return;
+var t;new IntersectionObserver(function(es){es.forEach(function(e){clearTimeout(t);if(e.isIntersecting){c.classList.add('taped');t=setTimeout(function(){c.classList.remove('taped');},3600);}else c.classList.remove('taped');});},{rootMargin:'-45% 0px -45% 0px'}).observe(c);
 })();
 
 
